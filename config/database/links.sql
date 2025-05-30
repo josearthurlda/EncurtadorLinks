@@ -1,0 +1,5 @@
+CREATE TABLE links(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    link_longo VARCHAR(10000),
+    link_curto VARCHAR(128) 
+)
