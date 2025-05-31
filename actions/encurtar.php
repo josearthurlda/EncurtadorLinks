@@ -11,4 +11,4 @@ for($x = 0; $x <=7; $x++){
 $sql = "INSERT INTO links (link_longo, link_curto) values ('$link', '$curto')";
 $con->query($sql);
 
-header("Location: ../index.php");
+header("Location: ../");

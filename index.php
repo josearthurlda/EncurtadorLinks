@@ -16,6 +16,35 @@
         <input class="form-control" name="link" id="link" type="url" placeholder="seulink.com" required>
         <button type="submit" class="btn btn-primary">Encurtar</button>
     </form>
+    <?php
+      $por_pagina = 10;
+      $pagina = $_GET['pagina'] ?? 1;
+      $inicio = ($pagina - 1) * $por_pagina;
 
+      $sql = "SELECT * FROM links ORDER BY id DESC LIMIT $inicio, $por_pagina"; 
+      $rows = $con->query($sql);
+      if($rows->num_rows > 0){
+        while($row = $rows->fetch_assoc()){
+          echo '
+            <tr class="text-center">
+              <th scope="row">'.$row['id'].'</th>
+              <td>'.$row['link_longo'].'</td>
+              <td><a href="./links/">Link Encurtado</a></td>
+              <td>
+                <a class="btn btn-danger" href="actions/deletar.php?id='.$row['id'].'">
+                  <i class="bi bi-trash"></i>
+                  Deletar
+                </a>
+
+                <a class="btn btn-primary" href="actions/editar.php?id='.$row['id'].'">
+                  <i class="bi bi-eye"></i>
+                  Editar
+                </a>
+
+              </td>
+            </tr>';
+        }
+      }
+    ?>
 </body>
 </html>
