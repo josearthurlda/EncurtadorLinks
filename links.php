@@ -53,6 +53,10 @@
                 
             </div>';
         }
+
+      }
+      else{
+        echo '<h5 class="position-absolute top-50 start-50 translate-middle text-center">Nenhum Link Encurtado</h5>';
       }
       if(isset($_GET['id'])){
         $curto = $_GET['id'];
