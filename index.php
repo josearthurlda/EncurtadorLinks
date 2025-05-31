@@ -6,6 +6,7 @@
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <title>Encurtador</title>
 </head>
@@ -29,21 +30,22 @@
             <tr class="text-center">
               <th scope="row">'.$row['id'].'</th>
               <td>'.$row['link_longo'].'</td>
-              <td><a href="./links/">Link Encurtado</a></td>
+              <td><a href="./'.$row['link_curto'].'?id='.$row['link_curto'].'">Link Encurtado</a></td>
               <td>
                 <a class="btn btn-danger" href="actions/deletar.php?id='.$row['id'].'">
                   <i class="bi bi-trash"></i>
                   Deletar
                 </a>
 
-                <a class="btn btn-primary" href="actions/editar.php?id='.$row['id'].'">
-                  <i class="bi bi-eye"></i>
-                  Editar
-                </a>
-
               </td>
             </tr>';
         }
+      }
+      if(isset($_GET['id'])){
+        $curto = $_GET['id'];
+        $sql = "SELECT link_longo FROM links WHERE link_curto = $curto;";
+        $longo = $con->query($sql)->fetch_array()[0];
+        header("Location: ".$longo."");
       }
     ?>
 </body>
