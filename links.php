@@ -20,27 +20,46 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="./">Inicio</a>
-          <a class="nav-link" href="./links.php">Links</a>
+          <a class="nav-link" aria-current="page" href="./">Inicio</a>
+          <a class="nav-link active" href="./">Links</a>
         </div>
       </div>
     </div>
   </nav>
-  <main class="d-flex flex-column justify-content-center position-absolute top-50 start-50 translate-middle">
-    <h1>Encurtador de Links</h1>
-    <div class="card">
-      <div class="card-header text-center">
-        Encurtar link
-      </div>
-      <div class="card-body text-center">
-        <form action="./actions/encurtar.php" method="POST">
-            <label for="link">Link para ser encurtado:</label>
-            <input class="form-control mt-2 mb-2" name="link" id="link" type="url" placeholder="seulink.com" required>
-            <button type="submit" class="btn btn-primary">Encurtar</button>
-        </form>
-      </div>
-    </div>
 
+  
+  <main class="justify-content-center row row-cols-4 p-2 gap-3">
+    <?php
+      $sql = "SELECT * FROM links ORDER BY id"; 
+      $rows = $con->query($sql);
+      if($rows->num_rows > 0){
+        while($row = $rows->fetch_assoc()){
+            $dominio = explode("/", $row['link_longo']); 
+          echo '
+            <div class="card text-center p-2">
+                <div class="card-header">
+                    Link
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">'.$dominio[2].'</h5>
+                    <a href="?id='.$row['link_curto'].'" class="btn btn-primary">Link Encurtado</a>
+                </div>
+                <a class="btn btn-danger" href="actions/deletar.php?id='.$row['id'].'">
+                  <i class="bi bi-trash"></i>
+                  Deletar
+                </a>
+            </div>';
+        }
+      }
+      if(isset($_GET['id'])){
+        $curto = $_GET['id'];
+        $sql = "SELECT link_longo FROM links WHERE link_curto = $curto;";
+        $longo = $con->query($sql)->fetch_array()[0];
+        header("Location: ".$longo."");
+      }
+    ?>
   </main>
+
+
 </body>
 </html>

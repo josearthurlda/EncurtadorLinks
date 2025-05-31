@@ -5,5 +5,5 @@
     $sql = "DELETE FROM links WHERE id = $id";
     $con->query($sql);
 
-    header("Location: ../index.php");
+    header("Location: ../links.php");
     exit();
